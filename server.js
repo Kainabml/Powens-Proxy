@@ -2,12 +2,14 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const https = require('https');
 
 const app = express();
 const port = process.env.PORT || 10000;
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.post('/token', async (req, res) => {
   try {
@@ -21,14 +23,15 @@ app.post('/token', async (req, res) => {
       params.toString(),
       {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
+        httpsAgent: new https.Agent({ rejectUnauthorized: false }) // Ignore SSL issues en sandbox
       }
     );
 
     res.json(response.data);
   } catch (error) {
-    console.error('Erreur proxy Powens :', error.message);
+    console.error('Erreur proxy Powens :', error.response?.data || error.message);
     res.status(500).json({ error: 'Erreur proxy Powens' });
   }
 });
