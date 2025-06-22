@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const https = require('https');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -21,10 +22,12 @@ app.post('/token', async (req, res) => {
     params.append('client_id', client_id);
     params.append('client_secret', client_secret);
 
+    // Ignorer les erreurs SSL en sandbox
+    const agent = new https.Agent({ rejectUnauthorized: false });
+
     const response = await axios.post(url, params.toString(), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      httpsAgent: agent
     });
 
     res.json(response.data);
