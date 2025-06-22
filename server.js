@@ -10,7 +10,7 @@ const port = process.env.PORT || 10000;
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Agent HTTPS pour désactiver les erreurs de certificat en mode test
+// Agent HTTPS qui désactive les vérifications SSL (nécessaire en sandbox)
 const agent = new https.Agent({ rejectUnauthorized: false });
 
 app.post('/token', async (req, res) => {
@@ -18,7 +18,7 @@ app.post('/token', async (req, res) => {
 
   try {
     const response = await axios.post(
-      'https://api-sandbox.powens.com/oauth/token',
+      'https://auth.sandbox.biapi.pro/2.0/oauth/token',
       new URLSearchParams({
         grant_type,
         client_id,
