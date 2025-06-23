@@ -27,7 +27,7 @@ app.post('/token', async (req, res) => {
       }
     );
 
-    res.json(response.data);
+    res.json({ access_token: response.data.access_token });
   } catch (error) {
     console.error('Powens erreur :', error.toJSON ? error.toJSON() : error.message);
     res.status(500).json({ error: 'Erreur proxy Powens', detail: error.toJSON ? error.toJSON() : error.message });
