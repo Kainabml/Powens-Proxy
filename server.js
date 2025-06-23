@@ -23,7 +23,6 @@ app.post('/token', async (req, res) => {
       }),
       {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        httpsAgent: new (require('https').Agent)({ rejectUnauthorized: false })
       }
     );
 
