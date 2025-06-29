@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const POWENS_AUTH_URL = 'https://lynxia-sandbox.biapi.pro/2.0/oauth/token';
+const POWENS_AUTH_URL = 'https://lynxia-sandbox.biapi.pro/2.0/auth/token';
 const CLIENT_ID = '39925270';
 const CLIENT_SECRET = 'fB5SmIq4NeroQ42Z63NvOqH6LPzUV9cT';
 
