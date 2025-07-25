@@ -2,6 +2,9 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -9,8 +12,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const POWENS_AUTH_URL = 'https://lynxia-sandbox.biapi.pro/2.0/auth/token';
-const CLIENT_ID = '39925270';
-const CLIENT_SECRET = 'fB5SmIq4NeroQ42Z63NvOqH6LPzUV9cT';
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+
+if (!CLIENT_ID || !CLIENT_SECRET) {
+  console.error('Missing CLIENT_ID or CLIENT_SECRET environment variables');
+  process.exit(1);
+}
 
 app.post('/token', async (req, res) => {
   try {
